@@ -1,0 +1,9 @@
+pour copier un nouveau projet :
+git clone git@gitlab.ensta.fr:kalos/genetic_travelling_salesman.git
+
+pour récupérer les modifications des autres :
+git pull origin master
+
+pour envoyer ses modifications :
+git commit -am "qu'est ce que j'ai fait"
+git push origin master

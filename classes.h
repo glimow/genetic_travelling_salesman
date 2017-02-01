@@ -15,7 +15,7 @@ private:
   vector<Individu> pop; //Individus stockés dans la population, vecteur d'individus
 public:
   Population selection(int p, int type); //retourne une population de p individus
-  // séléctionés par la méthode type
+  // sélectionnés par la méthode type
   void reproduction(); //fait se reproduire entre eux les individus de la Population de p éléments
   Population selectBestIndv(int q);
 };

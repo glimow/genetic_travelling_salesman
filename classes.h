@@ -1,10 +1,11 @@
 #include <cstdlib>
-#include <iostream.h>
+#include <iostream>
+
+using namespace std;
 
 class Individu{
   void mutation(); // fait muter l'individu
   float adaptation(); // renvoie la valeur de la fonction d'adaptation pour cet individu
-
 };
 
 Individu operator*(Individu const& a, Individu const& b);

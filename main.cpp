@@ -2,6 +2,8 @@
 #include <iostream.h>
 #include <"classes.cpp">
 
+using namespace std;
+
 int TYPE_SELECT = 0;
 int PERCENT_SELECT = 10;
 int PERCENT_KEEP = 4;

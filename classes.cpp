@@ -38,13 +38,26 @@ class Chemin : public Individu{
 
     float adaptation(){
       float adaptation = 0; // l'adpatation est l'inverse de la distance du chemin
-      for(int i = 1, i < this->path.size(), i++){
+      for(int i = 1; i < this->path.size(); i++){
         //somme des distances entre les villes
-        adaptation += distance(this->path[i-1],this->path[i])
+        adaptation += m[this->path[i-1]][this->path[i]];
       };
       return 1.0/adaptation;
     };
+    unsigned size(){
+      return this->path.size();
+    };
+
+    vector<int> getPath(){
+      return this->path;
+    };
 };
+
+Chemin operator*(Chemin a, Chemin b){
+  int hybridationIndex = rand() % a.size() - 1;
+  
+};
+
 
 
 // Individu traveling_salesman(Population pop,int type);

@@ -1,4 +1,4 @@
-#include <cstdlib>
+#include <stdlib.h>
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -22,9 +22,8 @@ public:
 };
 
 class Chemin : public Individu{
-  private:
-    vector<int> path;
   public:
+    vector<int> path;
     void mutation(){
       //Index de la mutation flip
       int mutationIndex = rand() % this->path.size() - 1;
@@ -44,6 +43,7 @@ class Chemin : public Individu{
       };
       return 1.0/adaptation;
     };
+
     unsigned size(){
       return this->path.size();
     };
@@ -55,7 +55,32 @@ class Chemin : public Individu{
 
 Chemin operator*(Chemin a, Chemin b){
   int hybridationIndex = rand() % a.size() - 1;
-  
+  Chemin c;
+  vector<int> cpath(a.size());
+  c.path =cpath;
+  //Copying the A path until we reach hybridationIndex
+  for(int i=0 ; i<hybridationIndex ; i++){
+    c.path[i] = a.path[i];
+  };
+  //Copying the remaining elmts from second path, checking that they are not
+  //already present
+  int oldIndex = 0;
+  for(int i=0 ; i<a.size(); i++){
+    // check if the actual element is in the list
+    bool allowed = true;
+    for (size_t j = 0; j < c.size(); j++) {
+      if (c.path[j] == b.path[j]) {
+          allowed = false;
+          break;
+      };
+    };
+    // if the actual elmt is not in the list
+    if (allowed){
+      c.path[hybridationIndex + oldIndex] = b.path[i];
+      oldIndex ++;
+    };
+  };
+  return c;
 };
 
 

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <math.h>
+
 using namespace std;
 /*
 class Individu{
@@ -27,9 +29,26 @@ public:
     return resultPop;
   };
 
-  Population selection(int p, int type); //retourne une population de p individus
+  Population selection(int p, int type){ //retourne une population de p individus
+    sort(this->pop.begin(),this->pop.end());
+    Population besties;
+    besties.pop = vector<Individu>(this->pop.begin(), this->pop.begin() + p);
+    return besties;
+  };
   // sélectionnés par la méthode type
-  void reproduction(); //fait se reproduire entre eux les individus de la Population de p éléments
+  void reproduction(float rate, int type){ //fait se reproduire entre eux les individus de la Population de p éléments
+    int p;
+    modf(this->pop.size()*rate , &p);
+    Population reproducteurs  = this.selection(p, type);
+    Population enfants = reproducteurs;
+    for(size_t i = 0; i < p; i++) {
+      enfants.pop[i] = reproducteurs.pop[rand()%p-1] *reproducteurs.pop[rand()%p-1] ; //Filling children population with crossovers of reproducteurs
+    };
+    reproducteurs = this.selection(this->pop.size()-p);
+    //making the hybrid population
+    enfants.pop.insert(enfants.pop.end(), reproducteurs.pop.begin(), reproducteurs.pop.end());
+    this->pop = enfants.pop;
+  };
 };
 
 //class individu:
@@ -40,7 +59,7 @@ class Chemin
     void mutation(){
       //Index de la mutation flip
       int mutationIndex = rand() % this->path.size() - 1;
-      //Création des deux sous vecteurs que l'on va flipper
+      //Swapping of the two elmts at the selected index
       swap(this->path[mutationIndex],this->path[mutationIndex+1]);
     };
 

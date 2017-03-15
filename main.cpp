@@ -17,8 +17,10 @@ template <class Individu> Individu geneticalResult(Population<Individu> pop, int
   Population<Individu> Pk = pop;
   for (size_t i = 0; i < 5000; i++){ // Condition d'arrêt
     Population<Individu> P = Pk.selection(percent_select, type);
-    P.reproduction(1, 1);
-    Pk = Pk.selectBestIndv(percent_keep) + P.selectBestIndv(100-percent_keep);
+    // P.reproduction(1, 1);
+    // P = P.selectBestIndv(100-percent_keep);
+    // Pk = Pk.selectBestIndv(percent_keep);
+    // Pk.pop.insert(Pk.pop.end(), P.pop.begin(), P.pop.end());
   };
   return Pk.pop[0];
 };
@@ -32,7 +34,7 @@ void printVector(vector<int> vect){
 }
 
 
-Population<Chemin> init(vector<vector<int>> m, int nb_individu){
+Population<Chemin> init(vector<vector<int> > m, int nb_individu){
   vector<int> initialpath(m.size());
   iota(begin(initialpath),end(initialpath), 0);
   auto engine = default_random_engine{};
@@ -51,12 +53,13 @@ Population<Chemin> init(vector<vector<int>> m, int nb_individu){
 
 int main(int argc, char const *argv[]) {
   cout << "trying to open " << argv[1] << endl;
-  vector<vector<int>> m = parse(argv[1]);
+  vector<vector<int> > m = parse(argv[1]);
   Population<Chemin> initialPop;
   initialPop = init(m, 10);
   printVector(initialPop.pop[1].path);
   Chemin result;
   result =  geneticalResult<Chemin>(initialPop, 0, 50,50);
-  cout << "adapatation : " << 1.0/result.adaptation() << endl;
+  // cout << "adapatation : " << result << endl;
+  printVector(result.path);
   return 0;
 }

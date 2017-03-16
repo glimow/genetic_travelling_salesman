@@ -7,13 +7,12 @@
 #include <bits/stdc++.h>
 
 
-
 using namespace std;
 
 
-vector<vector<int>> parse(char* file)
+vector<vector<int>> parse(string file)
 {
-    ifstream fichierutilisateur();
+    ifstream fichierutilisateur(file);
 
     //Ouverture d'un fichier en mode lecture
     if(fichierutilisateur.is_open())
@@ -49,3 +48,4 @@ vector<vector<int>> parse(char* file)
     {
         cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." <<endl;
     }
+};

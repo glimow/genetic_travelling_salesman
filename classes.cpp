@@ -21,11 +21,13 @@ template <class Individu> class Population{
 private:
 public:
   vector<Individu> pop; //Individus stockés dans la population, vecteur d'individus
+  vector<vector<int>> m;
   Population selectBestIndv(int q){
     sort(this->pop.begin(), this->pop.end(), compareIndividus<Individu>);
     vector<Individu> nouvellePop(this->pop.begin(),this->pop.begin()+q);
     Population resultPop;
     resultPop.pop = nouvellePop;
+    resultPop.m = this.m;
     return resultPop;
   };
 
@@ -33,6 +35,7 @@ public:
     sort(this->pop.begin(),this->pop.end());
     Population besties;
     besties.pop = vector<Individu>(this->pop.begin(), this->pop.begin() + p);
+    besties.m = this.m;
     return besties;
   };
   // sélectionnés par la méthode type
@@ -44,7 +47,7 @@ public:
     for(size_t i = 0; i < p; i++) {
       enfants.pop[i] = reproducteurs.pop[rand()%p-1] *reproducteurs.pop[rand()%p-1] ; //Filling children population with crossovers of reproducteurs
     };
-    reproducteurs = this.selection(this->pop.size()-p);
+    reproducteurs = this.selection(this->pop.size()-p, type);
     //making the hybrid population
     enfants.pop.insert(enfants.pop.end(), reproducteurs.pop.begin(), reproducteurs.pop.end());
     this->pop = enfants.pop;
@@ -56,6 +59,8 @@ class Chemin
 {
   public:
     vector<int> path;
+    vector<vector<int>>* pm;
+
     void mutation(){
       //Index de la mutation flip
       int mutationIndex = rand() % this->path.size() - 1;
@@ -64,11 +69,15 @@ class Chemin
     };
 
     float adaptation() const{
+      vector<vector<int>> & m = *pm;
       float adaptation = 0; // l'adpatation est l'inverse de la distance du chemin
       for(int i = 1; i < this->path.size(); i++){
         //somme des distances entre les villes
+
+
         adaptation += m[this->path[i-1]][this->path[i]];
       };
+      adaptation+=m[this->path[this->path.size()]][this->path[0]];
       return 1.0/adaptation;
     };
 
